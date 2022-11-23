@@ -3,7 +3,7 @@ import React from 'react';
 function Login() {
 
   const client_id = '63b963509ce94361be2659a9a6328ed3';
-  const redirect_uri = 'http://localhost:3002/callback';
+  const redirect_uri = 'http://localhost:3002/home';
   const scope = 'user-read-private user-read-email';
 
 
