@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Home = () => {
-
+    const [user, setUser] = useState();
     
     const hash = new URLSearchParams(window.location.hash.substring(1)).get("access_token");
     const base = 'https://api.spotify.com/v1';
 
+    useEffect( () => {
+        getUser();
+    }, []);
+
     const getUser = async () => {
-        const info = await fetch(base + "/me", {
+        let response = await fetch(base + "/me", {
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -16,14 +20,14 @@ const Home = () => {
             }
         });
 
-        return info.json();
-
+        const data = await response.json();
+        setUser(await data);
     }
-    console.log(getUser());
+    
 
     return (
         <div className='Home'>
-            this is home
+            this is home {user.country}
         </div>  
     );
 }

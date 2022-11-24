@@ -15,7 +15,7 @@ function Login() {
   //url += `&state=${encodeURIComponent(state)}`;
 
   const handleClick = () => {
-    window.open(url);
+    window.location.replace(url);
   }
 
   return (
