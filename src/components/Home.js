@@ -38,6 +38,10 @@ const Home = () => {
     <div className="Home">
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
         <div>{user ? <div>{user.display_name}</div> : <Skeleton />}</div>
+        
+        {playlists && playlists.items.map((item) => {return (<div>{item.id}</div>)})}
+        
+        <div> {playlists ? <div>{playlists.items[0].id}</div> : <Skeleton />}</div>
       </SkeletonTheme>
     </div>
   );
