@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import uniqid from 'uniqid'
+import './PlaylistContainer'
+import PlaylistContainer from "./PlaylistContainer";
 
 const Home = () => {
   const [user, setUser] = useState();
@@ -39,9 +42,17 @@ const Home = () => {
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
         <div>{user ? <div>{user.display_name}</div> : <Skeleton />}</div>
         
-        {playlists && playlists.items.map((item) => {return (<div>{item.id}</div>)})}
+        {playlists && playlists.items.map((item) => {
+            return (
+                <PlaylistContainer 
+                    playlist={item} 
+                    callSpotify={callSpotify}
+                    key={uniqid()} 
+                />
+            )
+        })}
+
         
-        <div> {playlists ? <div>{playlists.items[0].id}</div> : <Skeleton />}</div>
       </SkeletonTheme>
     </div>
   );
