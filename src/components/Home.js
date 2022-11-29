@@ -46,7 +46,7 @@ const Home = () => {
             return (
                 <PlaylistContainer 
                     playlist={item} 
-                    callSpotify={callSpotify}
+                    hash={hash}
                     key={uniqid()} 
                 />
             )

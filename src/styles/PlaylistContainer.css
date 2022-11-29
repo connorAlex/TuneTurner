@@ -1,0 +1,10 @@
+img {
+    height: 250px;
+    width: 250px;
+}
+
+.PlaylistContainer {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
