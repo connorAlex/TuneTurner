@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import uniqid from 'uniqid'
+import uniqid from 'uniqid';
+import Track from './Track';
 import "../styles/PlaylistContainer.css"
 
 const PlaylistContainer = ({playlist, hash}) => {
@@ -21,7 +22,19 @@ const PlaylistContainer = ({playlist, hash}) => {
         getTracks();
     }, []);
 
-    
+    const searchSong = async (song) => {
+        const uri = 'https://www.googleapis.com/customsearch/v1?';
+        const cx = "d047d17383e574d7a";
+        const key = process.env.GOOGLE_KEY;
+        const query = "test123";
+
+        const searchResults = await fetch(`${uri}key=${key}&cx=${cx}&q=${query}`, {
+            method: 'GET',
+            mode: 'cords',
+        });
+
+        return await searchResults.json();
+    };
 
     return (
         <div className='PlaylistContainer'>
@@ -38,13 +51,13 @@ const PlaylistContainer = ({playlist, hash}) => {
             </div>
 
             <div>
-                {tracks && tracks.items.slice(0, 10).map((item) => {
+                {tracks && tracks.items.slice(0, 1).map((item) => {
                     return (
-                        <div 
-                            key={uniqid()} 
-                        >
-                        {item.track.name}
-                        </div>
+                        <Track
+                            key={uniqid()}
+                            track={item.track}
+                            onClick={searchSong}
+                        />
                     )
                 })}
             </div>
