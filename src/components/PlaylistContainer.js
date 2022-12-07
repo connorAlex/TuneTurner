@@ -22,22 +22,28 @@ const PlaylistContainer = ({playlist, hash}) => {
         getTracks();
     }, []);
 
-    const searchSong = async (song) => {
+    const searchSong = async (query) => {
         const uri = 'https://www.googleapis.com/customsearch/v1?';
         const cx = "d047d17383e574d7a";
-        const key = process.env.GOOGLE_KEY;
-        const query = "test123";
+        const key = 'AIzaSyBqmZ730rjITUPla3QPb23PmILw_xw_L30';
 
         const searchResults = await fetch(`${uri}key=${key}&cx=${cx}&q=${query}`, {
             method: 'GET',
-            mode: 'cords',
+            mode: 'cors',
         });
+        const searchResultsJSON = await searchResults.json();
+        const asin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0];
 
-        return await searchResults.json();
+        if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(asin)) {
+            return asin;
+        } else{
+            console.error("ASIN NOT FOUND");
+        };
+
     };
 
     return (
-        <div className='PlaylistContainer'>
+        <div className='PlaylistContainer' >
             <div>
                 <div>
                     <img src={playlist.images[0].url} alt = "album cover"/>
@@ -52,11 +58,13 @@ const PlaylistContainer = ({playlist, hash}) => {
 
             <div>
                 {tracks && tracks.items.slice(0, 1).map((item) => {
+                    
                     return (
                         <Track
                             key={uniqid()}
                             track={item.track}
-                            onClick={searchSong}
+                            searchSong={searchSong}
+                            info={`${item.track.name}, ${item.track.artists[0].name}`}
                         />
                     )
                 })}
