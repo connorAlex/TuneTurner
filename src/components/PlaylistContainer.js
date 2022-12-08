@@ -3,7 +3,7 @@ import uniqid from 'uniqid';
 import Track from './Track';
 import "../styles/PlaylistContainer.css"
 
-const PlaylistContainer = ({playlist, hash}) => {
+const PlaylistContainer = ({playlist, hash, setAsins}) => {
 
     const [tracks, setTracks] = useState();
 
@@ -37,6 +37,10 @@ const PlaylistContainer = ({playlist, hash}) => {
         if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(asin)) {
             return asin;
         } else{
+            
+            // going to need a way to track what tracks were not found and display them to the user
+            // store the track "info" prop
+
             console.error("ASIN NOT FOUND");
         };
 
@@ -65,6 +69,7 @@ const PlaylistContainer = ({playlist, hash}) => {
                             track={item.track}
                             searchSong={searchSong}
                             info={`${item.track.name}, ${item.track.artists[0].name}`}
+                            
                         />
                     )
                 })}
