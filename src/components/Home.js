@@ -7,6 +7,7 @@ import PlaylistContainer from "./PlaylistContainer";
 const Home = () => {
   const [user, setUser] = useState();
   const [playlists, setPlaylists] = useState();
+  const [asins, setAsins] = useState([]);
 
   const hash = new URLSearchParams(window.location.hash.substring(1)).get(
     "access_token"
@@ -47,7 +48,8 @@ const Home = () => {
                 <PlaylistContainer 
                     playlist={item} 
                     hash={hash}
-                    key={uniqid()} 
+                    key={uniqid()}
+                    setAsins={setAsins}
                 />
             )
         })}
