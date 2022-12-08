@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import uniqid from 'uniqid';
 import Track from './Track';
 import "../styles/PlaylistContainer.css"
 
-const PlaylistContainer = ({playlist, hash, setAsins}) => {
+const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
 
     const [tracks, setTracks] = useState();
 
@@ -31,11 +32,14 @@ const PlaylistContainer = ({playlist, hash, setAsins}) => {
             method: 'GET',
             mode: 'cors',
         });
-        const searchResultsJSON = await searchResults.json();
-        const asin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0];
 
-        if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(asin)) {
-            return asin;
+        const searchResultsJSON = await searchResults.json();
+        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0];
+
+        if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(uriAsin)) {
+            // add asin to state 
+            setAsins(asins => [...asins, uriAsin]);
+
         } else{
             
             // going to need a way to track what tracks were not found and display them to the user
