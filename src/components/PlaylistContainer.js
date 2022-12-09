@@ -52,31 +52,28 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
 
     return (
         <div className='PlaylistContainer' >
+            <div> 
+                {playlist.name}
+            </div>
+
             <div>
                 <div>
                     <img src={playlist.images[0].url} alt = "album cover"/>
                 </div>
-                <div>
-                    {playlist.name}
-                </div>
-                <div>
-                    {playlist.description}
-                </div>
-            </div>
-
-            <div>
-                {tracks && tracks.items.slice(0, 1).map((item) => {
+                <div className='TrackContainer'>
+                    {tracks && tracks.items.slice(0, 2).map((item) => {
                     
-                    return (
-                        <Track
-                            key={uniqid()}
-                            track={item.track}
-                            searchSong={searchSong}
-                            info={`${item.track.name}, ${item.track.artists[0].name}`}
-                            
-                        />
-                    )
-                })}
+                        return (
+                            <Track
+                                key={uniqid()}
+                                track={item.track}
+                                searchSong={searchSong}
+                                info={`${item.track.name}, ${item.track.artists[0].name}`}
+                    
+                            />
+                        )
+                    })}
+                </div>
             </div>
         </div>
     );
