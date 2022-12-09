@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/Login.css';
 
 function Login() {
 
@@ -20,7 +21,9 @@ function Login() {
 
   return (
     <div className="Login">
-        <button onClick={handleClick}>Login to Spotify</button>
+        <div>Welcome to Tune Tuner</div>
+        <div>Stop Searching. Start Playing.</div>
+        <button onClick={handleClick}>Login To Spotify</button>
     </div>
   );
 }
