@@ -4,6 +4,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import uniqid from 'uniqid'
 import './PlaylistContainer'
 import PlaylistContainer from "./PlaylistContainer";
+import Nav from "./Nav";
 
 const Home = () => {
   const [user, setUser] = useState();
@@ -56,22 +57,30 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <div>{asins}</div>
-      <button onClick={() => createLink()}>checkout</button>
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
-        <div>{user ? <div>{user.display_name}</div> : <Skeleton />}</div>
+      
+      {user ? 
+        <Nav 
+          name={user.display_name}
+          createLink={createLink}
+        />
+        :
+        <Skeleton />
+      }
+      <div>{asins}</div>
+      
         
-        {playlists && playlists.items.map((item) => {
-            return (
-                <PlaylistContainer 
-                    playlist={item} 
-                    hash={hash}
-                    key={uniqid()}
-                    setAsins={setAsins}
-                    asins={asins}
-                />
-            )
-        })}
+      {playlists && playlists.items.map((item) => {
+          return (
+              <PlaylistContainer 
+                  playlist={item} 
+                  hash={hash}
+                  key={uniqid()}
+                  setAsins={setAsins}
+                  asins={asins}
+              />
+          )
+      })}
 
         
       </SkeletonTheme>
