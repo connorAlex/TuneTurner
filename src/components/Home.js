@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import uniqid from 'uniqid'
@@ -38,8 +39,25 @@ const Home = () => {
     return data;
   };
 
+  const createAmazonLink = () => {
+    let baseUrl = 'https://www.amazon.com/gp/aws/cart/add.html?';
+
+    for (let i=0; i < asins.length; i++) {
+      baseUrl += `ASIN.1=${asins[i]}&`;
+    }
+    return baseUrl
+  }
+
+  const createLink = () => {
+    const link = createAmazonLink();
+    window.open(link);
+    setAsins([]);
+  }
+
   return (
     <div className="Home">
+      <div>{asins}</div>
+      <button onClick={() => createLink()}>checkout</button>
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
         <div>{user ? <div>{user.display_name}</div> : <Skeleton />}</div>
         
@@ -50,12 +68,14 @@ const Home = () => {
                     hash={hash}
                     key={uniqid()}
                     setAsins={setAsins}
+                    asins={asins}
                 />
             )
         })}
 
         
       </SkeletonTheme>
+      
     </div>
   );
 };
