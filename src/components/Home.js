@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import uniqid from 'uniqid'
-import './PlaylistContainer'
+import uniqid from 'uniqid';
+import '../styles/Home.css';
 import PlaylistContainer from "./PlaylistContainer";
 import Nav from "./Nav";
 
@@ -70,17 +70,19 @@ const Home = () => {
       <div>{asins}</div>
       
         
-      {playlists && playlists.items.map((item) => {
-          return (
-              <PlaylistContainer 
-                  playlist={item} 
-                  hash={hash}
-                  key={uniqid()}
-                  setAsins={setAsins}
-                  asins={asins}
-              />
-          )
-      })}
+      <div className="Scrollbox">
+        {playlists && playlists.items.map((item) => {
+            return (
+                <PlaylistContainer
+                    playlist={item}
+                    hash={hash}
+                    key={uniqid()}
+                    setAsins={setAsins}
+                    asins={asins}
+                />
+            )
+        })}
+      </div>
 
         
       </SkeletonTheme>
