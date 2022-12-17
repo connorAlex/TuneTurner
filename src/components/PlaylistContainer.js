@@ -24,6 +24,13 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
     }, []);
 
     const searchSong = async (query) => {
+        const searchResultsJSON = await googleSearch(query);
+        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0].slice(0,10);
+        addAsins(uriAsin);
+        
+    };
+
+    const googleSearch = async (query) => {
         const uri = 'https://www.googleapis.com/customsearch/v1?';
         const cx = "d047d17383e574d7a";
         const key = 'AIzaSyBqmZ730rjITUPla3QPb23PmILw_xw_L30';
@@ -33,9 +40,10 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
             mode: 'cors',
         });
 
-        const searchResultsJSON = await searchResults.json();
-        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0].slice(0,10);
+        return await searchResults.json();
+    }
 
+    const addAsins = (uriAsin) => {
         if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(uriAsin)) {
             // add asin to state 
             setAsins(asins => [...asins, uriAsin]);
@@ -47,11 +55,17 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
 
             console.error("ASIN NOT FOUND");
         };
+    }
 
-    };
+    const handleClick = (e) => {
+        // for every track in the Track Container, search the song and add it to the state
+        const trackContainer = e.currentTarget.lastChild.lastChild;
+        console.log(trackContainer)
+
+    }
 
     return (
-        <div className='PlaylistContainer' >
+        <div className='PlaylistContainer' onClick={handleClick}>
             <div> 
                 {playlist.name}
             </div>
@@ -71,7 +85,7 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
                                 info={`${item.track.name}, ${item.track.artists[0].name}`}
                     
                             />
-                        )
+                        );
                     })}
                 </div>
             </div>
