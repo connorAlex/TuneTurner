@@ -34,7 +34,7 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
         });
 
         const searchResultsJSON = await searchResults.json();
-        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0];
+        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0].slice(0,10);
 
         if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(uriAsin)) {
             // add asin to state 
