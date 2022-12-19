@@ -1,7 +1,7 @@
 import React from 'react';
 import "../styles/Track.css";
 
-const Track = ({track, queryData, info, setQueryData}) => {
+const Track = ({track, info, setQueryData}) => {
     const msConvert = (ms) => {
         let totalSeconds = ms / 1000
         let minutes = Math.floor(totalSeconds / 60); 
