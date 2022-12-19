@@ -1,8 +1,7 @@
 import React from 'react';
 import "../styles/Track.css";
 
-const Track = ({track, searchSong, info, asins}) => {
-    //https://www.amazon.com/gp/aws/cart/add.html?ASIN.1=[ASIN]
+const Track = ({track, queryData, info, setQueryData}) => {
     const msConvert = (ms) => {
         let totalSeconds = ms / 1000
         let minutes = Math.floor(totalSeconds / 60); 
@@ -16,7 +15,9 @@ const Track = ({track, searchSong, info, asins}) => {
     }
 
     const handleClick = async (e) => {
-        await searchSong(info);
+        // add a check to see if the info is already in the queryData. Remove if so, add if not.
+        e.stopPropagation();        
+        setQueryData((currentData) => [...currentData, info])
     }
 
     return (
