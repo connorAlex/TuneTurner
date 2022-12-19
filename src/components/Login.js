@@ -23,7 +23,7 @@ function Login() {
     <div className="Login">
         <div>Welcome to Tune Tuner</div>
         <div>Stop Searching. Start Playing.</div>
-        <button onClick={handleClick}>Login To Spotify</button>
+        <button className='LoginButton' onClick={handleClick}>Login To Spotify</button>
     </div>
   );
 }
