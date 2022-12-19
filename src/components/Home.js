@@ -9,7 +9,7 @@ import Nav from "./Nav";
 const Home = () => {
   const [user, setUser] = useState();
   const [playlists, setPlaylists] = useState();
-  const [asins, setAsins] = useState([]);
+  const [queryData, setQueryData] = useState([]);
 
   const hash = new URLSearchParams(window.location.hash.substring(1)).get(
     "access_token"
@@ -40,21 +40,6 @@ const Home = () => {
     return data;
   };
 
-  const createAmazonLink = () => {
-    let baseUrl = 'https://www.amazon.com/gp/aws/cart/add.html?';
-
-    for (let i=0; i < asins.length; i++) {
-      baseUrl += `ASIN.1=${asins[i]}&`;
-    }
-    return baseUrl
-  }
-
-  const createLink = () => {
-    const link = createAmazonLink();
-    window.open(link);
-    setAsins([]);
-  }
-
   return (
     <div className="Home">
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
@@ -62,13 +47,11 @@ const Home = () => {
       {user ? 
         <Nav 
           name={user.display_name}
-          createLink={createLink}
+          queryData={queryData}
         />
         :
         <Skeleton />
       }
-      <div>{asins}</div>
-      
         
       <div className="Scrollbox">
         {playlists && playlists.items.map((item) => {
@@ -77,8 +60,7 @@ const Home = () => {
                     playlist={item}
                     hash={hash}
                     key={uniqid()}
-                    setAsins={setAsins}
-                    asins={asins}
+                    setQueryData={setQueryData}
                 />
             )
         })}
