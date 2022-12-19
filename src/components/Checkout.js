@@ -7,7 +7,7 @@ const Checkout = ({queryData}) => {
       
         for (let i=0; i < queryData.length; i++) {
             let asin = await searchSong([queryData[i]]);
-            baseUrl += `ASIN.1=${asin}&`;
+            baseUrl += `ASIN.${i+1}=${asin}&`;
         }
 
         window.open(baseUrl);
