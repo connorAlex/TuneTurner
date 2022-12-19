@@ -4,7 +4,7 @@ import uniqid from 'uniqid';
 import Track from './Track';
 import "../styles/PlaylistContainer.css"
 
-const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
+const PlaylistContainer = ({playlist, hash, queryData, setQueryData}) => {
 
     const [tracks, setTracks] = useState();
 
@@ -23,39 +23,6 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
         getTracks();
     }, []);
 
-    const searchSong = async (query) => {
-        const searchResultsJSON = await googleSearch(query);
-        const uriAsin = await searchResultsJSON.items[0].formattedUrl.match(/[^dp/]*$/g)[0].slice(0,10);
-        addAsins(uriAsin);
-        
-    };
-
-    const googleSearch = async (query) => {
-        const uri = 'https://www.googleapis.com/customsearch/v1?';
-        const cx = "d047d17383e574d7a";
-        const key = 'AIzaSyBqmZ730rjITUPla3QPb23PmILw_xw_L30';
-
-        const searchResults = await fetch(`${uri}key=${key}&cx=${cx}&q=${query}`, {
-            method: 'GET',
-            mode: 'cors',
-        });
-
-        return await searchResults.json();
-    }
-
-    const addAsins = (uriAsin) => {
-        if ((/^(B[\dA-Z]{9}|\d{9}(X|\d))/g).test(uriAsin)) {
-            // add asin to state 
-            setAsins(asins => [...asins, uriAsin]);
-
-        } else{
-            
-            // going to need a way to track what tracks were not found and display them to the user
-            // store the track "info" prop
-
-            console.error("ASIN NOT FOUND");
-        };
-    }
 
     const handleClick = (e) => {
         // for every track in the Track Container, search the song and add it to the state
@@ -76,14 +43,14 @@ const PlaylistContainer = ({playlist, hash, setAsins, asins}) => {
                 </div>
                 <div className='TrackContainer'>
                     {tracks && tracks.items.slice(0, 2).map((item) => {
-                    
+                        
                         return (
                             <Track
                                 key={uniqid()}
                                 track={item.track}
-                                searchSong={searchSong}
                                 info={`${item.track.name}, ${item.track.artists[0].name}`}
-                    
+                                queryData={queryData}
+                                setQueryData={setQueryData}
                             />
                         );
                     })}
