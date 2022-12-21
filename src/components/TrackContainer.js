@@ -3,7 +3,7 @@ import uniqid from 'uniqid';
 import Track from './Track';
 import '../styles/TrackContainer.css'
 
-const TrackContainer = ({tracks,setQueryData}) => {
+const TrackContainer = ({tracks,setQueryData, selected}) => {
     
     return (
         <div className='TrackContainer'>
@@ -16,6 +16,7 @@ const TrackContainer = ({tracks,setQueryData}) => {
                                 track={item.track}
                                 info={`${item.track.name}, ${item.track.artists[0].name}`}
                                 setQueryData={setQueryData}
+                                selected={selected}
                             />
                         );
                     })}

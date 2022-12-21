@@ -8,6 +8,7 @@ import "../styles/PlaylistContainer.css"
 const PlaylistContainer = ({playlist, hash, setQueryData}) => {
 
     const [tracks, setTracks] = useState();
+    const [selected, setSelected] = useState(false);
 
     useEffect(() => {
         const getTracks = async () => {
@@ -28,10 +29,7 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
     const handleClick = (e) => {
         //addPlaylist()
         e.currentTarget.classList.toggle("active");
-    }
-
-    const handleMouseOver = (e) => {
-        
+        setSelected(true);
     }
 
     const addPlaylist = () => {
@@ -56,6 +54,7 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
                 <TrackContainer 
                     tracks={tracks}
                     setQueryData={setQueryData}
+                    selected={selected}
                 />
                 
             </div>
