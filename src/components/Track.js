@@ -14,19 +14,30 @@ const Track = ({track, info, setQueryData}) => {
         return (`${minutes}:${seconds}`);
     }
 
+    const shortenString = (string) => {
+
+        if (string.length > 20) {
+            const substring = string.substring(0,17) + "...";
+            return substring
+        }
+        return string
+
+
+    };
+
     const handleClick = async (e) => {
-        // add a check to see if the info is already in the queryData. Remove if so, add if not.
-        e.stopPropagation();        
-        setQueryData((currentData) => [...currentData, info])
+        e.stopPropagation();
+        e.currentTarget.classList.toggle("activeTrack");       
+        //setQueryData((currentData) => [...currentData, info])
     }
 
     return (
         <div className='Track' onClick={handleClick} >
-            {track.name}
+            {shortenString(track.name)}
             <div >
                 <div>{msConvert(track.duration_ms)}</div>
-                <div>{track.artists[0].name}</div>
-                <div>{track.album.name}</div>
+                <div>{shortenString(track.artists[0].name)}</div>
+                <div>{shortenString(track.album.name)}</div>
             </div>
         </div>
     )
