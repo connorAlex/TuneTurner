@@ -1,0 +1,8 @@
+.TrackContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    font-size: .5rem;
+    padding: 5px;
+    width: 60%;
+}
