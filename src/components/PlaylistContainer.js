@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import uniqid from 'uniqid';
-import Track from './Track';
+import PlaylistTitle from './PlaylistTitle';
+import TrackContainer from './TrackContainer';
 import "../styles/PlaylistContainer.css"
+
 
 const PlaylistContainer = ({playlist, hash, setQueryData}) => {
 
@@ -25,7 +26,12 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
 
 
     const handleClick = (e) => {
-        addPlaylist()
+        //addPlaylist()
+        e.currentTarget.classList.toggle("active");
+    }
+
+    const handleMouseOver = (e) => {
+        
     }
 
     const addPlaylist = () => {
@@ -40,28 +46,18 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
 
     return (
         <div className='PlaylistContainer' onClick={handleClick}>
-            <div> 
-                {playlist.name}
-            </div>
+            <PlaylistTitle 
+                title={playlist.name}
+            />
 
             <div>
-                <div>
-                    <img src={playlist.images[0].url} alt = "album cover"/>
-                </div>
-                <div className='TrackContainer'>
-                    {/* Limited to 2 songs due to googleJSON daily throttle */}
-                    {tracks && tracks.items.slice(0, 2).map((item) => {
-                        
-                        return (
-                            <Track
-                                key={uniqid()}
-                                track={item.track}
-                                info={`${item.track.name}, ${item.track.artists[0].name}`}
-                                setQueryData={setQueryData}
-                            />
-                        );
-                    })}
-                </div>
+                <img src={playlist.images[0].url} alt = "album cover"/>
+                
+                <TrackContainer 
+                    tracks={tracks}
+                    setQueryData={setQueryData}
+                />
+                
             </div>
         </div>
     );
