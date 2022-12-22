@@ -1,9 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/Track.css";
 
 const Track = ({track, info, setQueryData, selected}) => {
 
-
+    const [active, setActive] = useState(false);
+    
+    useEffect(() => {
+        console.log("change in selected")
+        if (!selected) {
+            setActive(false);
+        }
+    }, [selected])
+   
 
     const msConvert = (ms) => {
         let totalSeconds = ms / 1000
@@ -27,9 +35,14 @@ const Track = ({track, info, setQueryData, selected}) => {
 
     };
 
+    const toggleActive = (target) => {
+        target.classList.toggle("activeTrack");
+
+    };
+
     const handleClick = async (e) => {
         e.stopPropagation();
-        e.currentTarget.classList.toggle("activeTrack");
+        toggleActive(e.currentTarget);
         
         // if track is already selected, remove from cart
         // if track is not selected, add to cart
@@ -38,7 +51,7 @@ const Track = ({track, info, setQueryData, selected}) => {
     }
 
     return (
-        <div className={'Track ' + (selected ? "activeTrack": "")} onClick={handleClick} >
+        <div className={'Track ' + (selected || active ? "activeTrack": "")} onClick={handleClick} >
             {shortenString(track.name)}
             <div >
                 <div>{msConvert(track.duration_ms)}</div>

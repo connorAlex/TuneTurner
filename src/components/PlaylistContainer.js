@@ -29,7 +29,7 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
     const handleClick = (e) => {
         //addPlaylist()
         e.currentTarget.classList.toggle("active");
-        setSelected(true);
+        setSelected(!selected);
     }
 
     const addPlaylist = () => {
