@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Nav.css';
 import Checkout from './Checkout';
 
-const Nav = ({name, createLink, queryData}) => {
+const Nav = ({name, queryData}) => {
 
     return (
         <div className='Nav'>

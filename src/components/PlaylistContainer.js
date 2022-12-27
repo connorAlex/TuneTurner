@@ -5,7 +5,7 @@ import TrackContainer from './TrackContainer';
 import "../styles/PlaylistContainer.css"
 
 
-const PlaylistContainer = ({playlist, hash, setQueryData}) => {
+const PlaylistContainer = ({playlist, queryData, hash, setQueryData}) => {
 
     const [tracks, setTracks] = useState();
     const [selected, setSelected] = useState(false);
@@ -55,6 +55,7 @@ const PlaylistContainer = ({playlist, hash, setQueryData}) => {
                     tracks={tracks}
                     setQueryData={setQueryData}
                     selected={selected}
+                    queryData={queryData}
                 />
                 
             </div>
