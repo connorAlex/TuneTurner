@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "../styles/Track.css";
 
-const Track = ({track, info, setQueryData, selected}) => {
+const Track = ({track, info, setQueryData,queryData, selected}) => {
 
     const [active, setActive] = useState(false);
     
     useEffect(() => {
-        console.log("change in selected")
         if (!selected) {
             setActive(false);
         }
@@ -35,19 +34,28 @@ const Track = ({track, info, setQueryData, selected}) => {
 
     };
 
-    const toggleActive = (target) => {
-        target.classList.toggle("activeTrack");
-
-    };
-
     const handleClick = async (e) => {
         e.stopPropagation();
         toggleActive(e.currentTarget);
-        
-        // if track is already selected, remove from cart
-        // if track is not selected, add to cart
+        toggleQuery(info);
+    }
 
-        //setQueryData((currentData) => [...currentData, info])
+    const toggleActive = (target) => {
+        target.classList.toggle("activeTrack");
+    };
+
+    const handleRemoveItem = (index) => {
+        setQueryData(queryData.filter(item => queryData.indexOf(item) !== index))
+    }
+
+    const toggleQuery = (info) => {
+        // if track is already selected, remove from cart
+        let queryIndex = queryData.indexOf(info);
+        if (queryIndex === -1) {
+            setQueryData((currentData) => [...currentData,info]);
+        } else {
+            handleRemoveItem(queryIndex);
+        }
     }
 
     return (
