@@ -5,42 +5,43 @@ import TrackContainer from './TrackContainer';
 import "../styles/PlaylistContainer.css"
 
 
-const PlaylistContainer = ({playlist, queryData, hash, setQueryData}) => {
+const PlaylistContainer = ({playlist, hash, setQueryData, toggleQuery}) => {
 
     const [tracks, setTracks] = useState();
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState();
 
     useEffect(() => {
-        const getTracks = async () => {
-            const trackObject = await fetch(playlist.tracks.href,{
-                method: "GET",
-                mode: "cors",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + hash,
-                },
-              });
-            setTracks(await trackObject.json());
+        const handleTracks = async () => {
+            setTracks(await getTracks());
         }
-        getTracks();
-    }, []);
+        if (selected || selected === undefined) handleTracks();
+    }, [selected])
+
+    const getTracks = async () => {
+        const trackObject = await fetch(playlist.tracks.href,{
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + hash,
+            },
+          });
+        const data = await trackObject.json();
+        return data;
+    }
 
 
     const handleClick = (e) => {
-        //addPlaylist()
         e.currentTarget.classList.toggle("active");
         setSelected(!selected);
+        let queries = [];
+        for (let i = 0; i < 2; i++){
+            const info = `${tracks.items[i].track.name}, ${tracks.items[i].track.artists[0].name}`
+            queries.push(info);
+        }
+        toggleQuery(queries);
     }
 
-    const addPlaylist = () => {
-        let tracksInfo = [];
-    
-        // Limited to 2 songs due to googleJSON daily throttle
-        for (let i = 0; i < 2; i++) {
-            tracksInfo.push(`${tracks.items[i].track.name}, ${tracks.items[i].track.artists[0].name}`)
-        }
-        setQueryData((currentData) => [...currentData, ...tracksInfo])
-    }
 
     return (
         <div className='PlaylistContainer' onClick={handleClick}>
@@ -51,16 +52,15 @@ const PlaylistContainer = ({playlist, queryData, hash, setQueryData}) => {
             <div>
                 <img src={playlist.images[0].url} alt = "album cover"/>
                 
-                <TrackContainer 
+                {/* {tracks && <TrackContainer 
                     tracks={tracks}
-                    setQueryData={setQueryData}
                     selected={selected}
-                    queryData={queryData}
-                />
+                    toggleQuery={toggleQuery}
+                />} */}
                 
             </div>
         </div>
     );
-}
+};
 
 export default PlaylistContainer;
