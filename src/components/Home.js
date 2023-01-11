@@ -34,33 +34,42 @@ const Home = () => {
         Authorization: "Bearer " + hash,
       },
     });
-
     const data = await response.json();
     console.log(data);
+
     return data;
   };
+  
+  const toggleQuery = (queries) => {
+    let tmp = [...queryData];
+    queries.forEach((item) => {
+      //if the query exists, remove it
+      if (tmp.includes(item)) {
+        tmp.splice(tmp.indexOf(item),1);
+      } else {
+        tmp.push(item);
+      }
+    });
+    setQueryData(tmp);
+    
+  }
 
   return (
     <div className="Home">
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
       
-      {user ? 
-        <Nav 
-          name={user.display_name}
-          queryData={queryData}
-        />
-        :
-        <Skeleton />
-      }
+      {user ? <Nav name={user.display_name} queryData={queryData}/> : <Skeleton /> }
         
       <div className="Scrollbox">
         {playlists && playlists.items.map((item) => {
+          
             return (
                 <PlaylistContainer
                     playlist={item}
                     hash={hash}
                     key={uniqid()}
                     setQueryData={setQueryData}
+                    toggleQuery={toggleQuery}
                 />
             )
         })}
