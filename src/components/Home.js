@@ -10,6 +10,7 @@ const Home = () => {
   const [user, setUser] = useState();
   const [playlists, setPlaylists] = useState();
   const [queryData, setQueryData] = useState([]);
+  const [key, setKey] = useState(uniqid());
 
   const hash = new URLSearchParams(window.location.hash.substring(1)).get(
     "access_token"
@@ -60,20 +61,19 @@ const Home = () => {
       
       {user ? <Nav name={user.display_name} queryData={queryData}/> : <Skeleton /> }
         
-      <div className="Scrollbox">
-        {playlists && playlists.items.map((item) => {
+
+        {playlists && playlists.items.map((item, index) => {
           
             return (
                 <PlaylistContainer
                     playlist={item}
                     hash={hash}
-                    key={uniqid()}
-                    setQueryData={setQueryData}
+                    key={index}
                     toggleQuery={toggleQuery}
                 />
             )
         })}
-      </div>
+      
 
         
       </SkeletonTheme>

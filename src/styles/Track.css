@@ -1,8 +1,0 @@
-.Track {
-    display:flex;
-    gap: 10px;
-}
-.Track > div {
-    display: flex;
-    gap: 5px;
-}
