@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import uniqid from 'uniqid';
-import '../styles/Home.css';
 import PlaylistContainer from "./PlaylistContainer";
 import Nav from "./Nav";
+import uniqid from 'uniqid';
+import '../styles/Home.css';
 
 const Home = () => {
   const [user, setUser] = useState();
@@ -16,14 +16,18 @@ const Home = () => {
   );
   const base = "https://api.spotify.com/v1";
 
+  //This is not causing home to rerender.
   useEffect(() => {
     const setState = async () => {
       const user = await callSpotify("/me");
       setUser(await user);
       setPlaylists(await callSpotify(`/users/${user.id}/playlists`));
+      console.log("home state set");
     };
     setState();
+    
   }, []);
+  
 
   const callSpotify = async (endpoint) => {
     let response = await fetch(base + endpoint, {
@@ -35,8 +39,6 @@ const Home = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
-
     return data;
   };
   
@@ -51,7 +53,6 @@ const Home = () => {
       }
     });
     setQueryData(tmp);
-    
   }
 
   return (
@@ -61,18 +62,28 @@ const Home = () => {
       {user ? <Nav name={user.display_name} queryData={queryData}/> : <Skeleton /> }
         
       <div className="Scrollbox">
-        {playlists && playlists.items.map((item) => {
+        {/* {playlists && playlists.items.map((item) => {
           
             return (
                 <PlaylistContainer
                     playlist={item}
                     hash={hash}
                     key={uniqid()}
-                    setQueryData={setQueryData}
                     toggleQuery={toggleQuery}
                 />
             )
-        })}
+        })} */}
+        {playlists && 
+          <PlaylistContainer
+            playlist={playlists.items[0]}
+            hash={hash}
+            toggleQuery={toggleQuery}
+          />
+        }
+
+        
+
+        
       </div>
 
         

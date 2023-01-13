@@ -7,7 +7,6 @@ const Nav = ({name, queryData}) => {
     return (
         <div className='Nav'>
             <div> Welcome, {name}. </div>
-            <div>{queryData}</div>
             <Checkout 
                 queryData={queryData}
             />

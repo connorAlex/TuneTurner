@@ -5,15 +5,16 @@
     align-items: center;
 
     height: 100vh;
-    color: white;
     font-size: calc(5px + 3vw);
     
 }
 .Login > :first-child {
     text-align: center;
+    width: 75%;
     font-size: calc(10px + 8vw);
     padding: 5px;
 }
+
 
 .LoginButton {
     margin: 25px;

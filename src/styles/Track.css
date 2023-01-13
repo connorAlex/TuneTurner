@@ -1,8 +1,32 @@
 .Track {
     display:flex;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    height: 15%;
+    cursor: pointer;
+}
+
+.Track:hover {
+    
+    background-color: aqua;
+}
+.activeTrack {
+    background-color: aqua;
 }
 .Track > div {
     display: flex;
-    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
+    
+    width: 200px;
+}
+
+.Track > div > div {
+    text-align: center;
+    max-height: 9px;
+}
+
+.Track > div :nth-child(3) {
+    width: 75px;
 }
