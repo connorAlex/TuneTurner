@@ -1,16 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import uniqid from 'uniqid';
-import '../styles/Home.css';
 import PlaylistContainer from "./PlaylistContainer";
 import Nav from "./Nav";
+import "../styles/Home.css";
 
 const Home = () => {
   const [user, setUser] = useState();
   const [playlists, setPlaylists] = useState();
   const [queryData, setQueryData] = useState([]);
-  const [key, setKey] = useState(uniqid());
 
   const hash = new URLSearchParams(window.location.hash.substring(1)).get(
     "access_token"
@@ -40,44 +38,49 @@ const Home = () => {
 
     return data;
   };
-  
+
   const toggleQuery = (queries) => {
     let tmp = [...queryData];
     queries.forEach((item) => {
-      //if the query exists, remove it
       if (tmp.includes(item)) {
-        tmp.splice(tmp.indexOf(item),1);
+        tmp.splice(tmp.indexOf(item), 1);
       } else {
         tmp.push(item);
       }
     });
     setQueryData(tmp);
-    
-  }
+  };
 
   return (
     <div className="Home">
       <SkeletonTheme width="95%" baseColor="#f3f4f6" highlightColor="#d1d5db">
-      
-      {user ? <Nav name={user.display_name} queryData={queryData}/> : <Skeleton /> }
-        
+        {user ? (
+          <Nav name={user.display_name} queryData={queryData} />
+        ) : (
+          <Skeleton />
+        )}
 
-        {playlists && playlists.items.map((item, index) => {
-          
-            return (
+        <div className="Scrollbox">
+          <div className="Disclaimer">
+            <div>Select any desired playlists for download.</div>
+            <div>
+              Note: TuneTurner is still in a proof-of-concept phase. Playlists
+              are limited to two songs.
+            </div>
+          </div>
+          {playlists &&
+            playlists.items.map((item, index) => {
+              return (
                 <PlaylistContainer
-                    playlist={item}
-                    hash={hash}
-                    key={index}
-                    toggleQuery={toggleQuery}
+                  playlist={item}
+                  hash={hash}
+                  key={index}
+                  toggleQuery={toggleQuery}
                 />
-            )
-        })}
-      
-
-        
+              );
+            })}
+        </div>
       </SkeletonTheme>
-      
     </div>
   );
 };

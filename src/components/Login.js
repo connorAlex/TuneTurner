@@ -1,12 +1,10 @@
-import React from 'react';
-import '../styles/Login.css';
+import React from "react";
+import "../styles/Login.css";
 
 function Login() {
-
-  const client_id = '63b963509ce94361be2659a9a6328ed3';
-  const redirect_uri = 'http://localhost:3000/home';
-  const scope = 'user-read-private user-read-email';
-
+  const client_id = "63b963509ce94361be2659a9a6328ed3";
+  const redirect_uri = "http://localhost:3000/home";
+  const scope = "user-read-private user-read-email";
 
   let url = "https://accounts.spotify.com/authorize";
   url += "?response_type=token";
@@ -17,13 +15,15 @@ function Login() {
 
   const handleClick = () => {
     window.location.replace(url);
-  }
+  };
 
   return (
     <div className="Login">
-        <div>Welcome to Tune Tuner</div>
-        <div>Stop Searching. Start Playing.</div>
-        <button className='LoginButton' onClick={handleClick}>Login To Spotify</button>
+      <div>Welcome to Tune Tuner</div>
+      <div>Stop Searching. Start Playing.</div>
+      <button className="LoginButton" onClick={handleClick}>
+        Login To Spotify
+      </button>
     </div>
   );
 }
