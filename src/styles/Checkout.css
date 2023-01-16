@@ -1,0 +1,8 @@
+.Checkout {
+    display: flex;
+    gap: 5px;
+}
+.Checkout > div:hover {
+    text-decoration: underline;
+
+}
