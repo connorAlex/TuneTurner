@@ -3,7 +3,7 @@ import "../styles/Login.css";
 
 function Login() {
   const client_id = "63b963509ce94361be2659a9a6328ed3";
-  const redirect_uri = "https://tune-turner.vercel.app//home";
+  const redirect_uri = "https://tune-turner.vercel.app/home";
   const scope = "user-read-private user-read-email";
 
   let url = "https://accounts.spotify.com/authorize";
